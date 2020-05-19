@@ -1,0 +1,84 @@
+           SQL QUERIES
+
+
+1)write a query to fetch employee firstname and salary together using alias name EmpSalary
+eg: Allen-5000
+Steve-4000
+
+
+SELECT first_name AS Emp,Salary from employees  ORDER BY first_name;
+-------------------------------------------------------------------------------------------------------------------------------------------------
+2)Write a query to get all the employers who are IT programmers (job id= IT_PROG) and whose salary>20000
+
+SELECT first_name,job_id, max(salary )from employees WHERE job_id = 'IT_PROG' order by first_name,max(salary>2000);         /*24000*/
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+3)write a query to find length of fullname(firstname+lastname) of all employees
+
+select concat(first_name,last_name) as full_name ,length(first_name)+length(last_name)  from employees;
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+
+4)write a query to get employees sorted by manager_id
+SELECT manager_id ,first_name from employees  group by  manager_id;
+------------------------------------------------------------------------------------------------------------------------------------------
+
+5)write a query to fetch employees whose last_name ends with 'en'.
+
+SELECT last_name FROM employees WHERE last_name LIKE'%en';
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+6)Write a query to Select first_name, dept name, deptid,salary  from employees table and departments table  based on all the common column
+
+ SELECT e.first_name, d.department_name,d.department_id,salary  from employees e INNER JOIN departments d ON  e.department_id=d.department_id;
+
+                                                                    OR
+
+SELECT e.first_name, d.department_name,d.department_id,salary  from employees e, departments d WHERE  d.department_id=e.department_id;
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+ 
+7)Write a query to Select first_name, dept name, deptid,salary  from employees table and departments table  based on dept id
+
+SELECT e.first_name,d.department_name,d.department_id,e.salary from employees e,departments d WHERE e.department_id=d.department_id GROUP BY d.department_id;
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+8)Write a query to Select  city, firstname, deptname  for an employee 
+
+9)Write a query to fetch  empname, deptname and deptid  of all the departments with and without employees.
+                                                                              ----------------------------
+SELECT e.first_name,e.last_name,d.department_name,d.department_id FROM employees e INNER JOIN departments d ON e.department_id=d.department_id group by d.department_name,d.department_id;
+
+SELECT d.department_name,d.department_id FROM employees e,departments d WHERE e.department_id=d.department_id group by d.department_name,d.department_id;
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+10)query to find min sal under each job category in specific  department.
+
+SELECT e.first_name,e.last_name,d.department_id FROM employees e INNER JOIN departments d ON (d.department_id=e.employee_id) WHERE salary IN (SELECT min(salary) FROM employees GROUP BY department_id);
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+11)fetch employees whose salary is less than salaries of  employee with job_id IT_PROG
+
+SELECT  first_name ,min(salary),job_id FROM employees WHERE job_id = 'IT_PROG';
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+12)write a query to select first_name and hiredate of employees who were hired after employee Steven.
+
+SELECT first_name,last_name,hire_date FROM employees WHERE first_name='Steven King';
+
+
+SELECT e.first_name,e.last_name,e.hire_date
+ FROM employees e 
+ JOIN employees Steven 
+ ON(Steven.last_name='KING')
+ WHERE e.hire_date>Steven.hire_date;
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+13)query to find employee details of first highest salaried person.
+
+SELECT first_name,last_name,max(salary) FROM employees WHERE salary in(SELECT max(salary) FROM employees ORDER BY salary) ;
+-------------------------------------------------------------------------------------------------------------------------------------------
+
